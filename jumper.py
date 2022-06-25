@@ -40,21 +40,21 @@ class PlayGame:
             word_as_list[letter] = self.guess
         self.word_completion = "".join(word_as_list)
 
-    def RunGame(self):
+    def run_game(self):
     # Prints the board and the word completion. Calls get_guess. Calls IsGameDone, and if it returns True, stops the loop
         while True:
             print()
             self.board.stages(self.failed_tries)
             print(self.word_completion)
             self.get_guess()
-            if self._IsGameDone():
+            if self._is_game_done():
                 return
 
-    def _IsGameDone(self):
+    def _is_game_done(self):
     # Checks if the number of incorrect guesses has reached the cap, and returns True if so.
     # Checks if the word has been completed and returns True if so
     # Otherwise, returns False
-        if self.failed_tries == self.board.incorrectsPerGame():
+        if self.failed_tries == self.board.incorrects_per_game():
             self.board.stages(self.failed_tries)
             print(f"Sorry, you lost! The word was {self.word}.")
             return True
@@ -75,7 +75,7 @@ class GameMaster:
     def __init__(self):
         self.session_stats = SessionStats()
 
-    def StartGameSession(self):
+    def start_game_session(self):
     # Makes the program aware that it is the first time running the program. Prints the welcome dialogue
     # Builds a game and increments the amount of times played
     # Sets first to False so the game knows to ask to play again
@@ -93,7 +93,7 @@ class GameMaster:
                     return
             
             self.session_stats.times_played += 1
-            PlayGame().RunGame()
+            PlayGame().run_game()
 
             first = False
 
@@ -149,10 +149,10 @@ class displayBoard:
         # Prints a different stick figure based on how many incorrect guesses have been made
         print(self._jumper[failed_tries])
 
-    def incorrectsPerGame(self):
+    def incorrects_per_game(self):
         # Returns the amount of incorrect guesses allowed
         return len(self._jumper) - 1
 
 if __name__ == "__main__":
     # Builds a game and starts the session
-    GameMaster().StartGameSession()
+    GameMaster().start_game_session()
